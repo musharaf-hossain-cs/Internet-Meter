@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>InternetMeter</AssemblyName>
+    <RootNamespace>InternetMeter</RootNamespace>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <InformationalVersion>1.0.1</InformationalVersion>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>false</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.11" />
+    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="4.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Shared\MeterSharedProtocol.cs" Link="Shared\MeterSharedProtocol.cs" />
+    <None Include="..\InternetMeter.Deskband.Native\bin\$(Configuration)\InternetMeter.Deskband.dll"
+          Link="InternetMeter.Deskband.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest"
+          ExcludeFromSingleFile="true" />
+  </ItemGroup>
+  <Target Name="BuildNativeDeskband" BeforeTargets="PrepareForBuild"
+          Inputs="..\InternetMeter.Deskband.Native\Deskband.cpp;..\InternetMeter.Deskband.Native\Deskband.def"
+          Outputs="..\InternetMeter.Deskband.Native\bin\$(Configuration)\InternetMeter.Deskband.dll">
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\..\scripts\build-deskband.ps1&quot; -Configuration &quot;$(Configuration)&quot;" />
+  </Target>
+</Project>
+

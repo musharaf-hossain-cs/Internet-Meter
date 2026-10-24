@@ -1,0 +1,27 @@
+# Local toolchains and IDE state
+.dotnet/
+.tools/
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# .NET and native build output
+**/bin/
+**/obj/
+TestResults/
+artifacts/*
+!artifacts/dashboard-physical.png
+
+# Local application data and logs
+Data/
+*.db
+*.db-shm
+*.db-wal
+*.log
+
+# OS metadata
+.DS_Store
+Thumbs.db
+

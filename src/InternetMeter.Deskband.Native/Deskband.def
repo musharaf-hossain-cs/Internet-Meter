@@ -1,0 +1,4 @@
+LIBRARY "InternetMeter.Deskband"
+EXPORTS
+    DllCanUnloadNow
+    DllGetClassObject
