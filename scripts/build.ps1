@@ -5,10 +5,12 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$appVersion = '1.0.2'
+$appVersion = '1.0.3'
 $localDotNet = Join-Path $projectRoot '.dotnet\dotnet.exe'
 $dotnetCommand = if (Test-Path -LiteralPath $localDotNet) { $localDotNet } else { 'dotnet' }
 $publishDirectory = Join-Path $projectRoot 'artifacts\publish'
+$artifactsDirectory = Join-Path $projectRoot 'artifacts'
+$artifactsPrefix = $artifactsDirectory.TrimEnd('\') + '\'
 $zipPath = Join-Path $projectRoot "artifacts\InternetMeter-win-x64-$appVersion.zip"
 $checksumsPath = Join-Path $projectRoot 'artifacts\SHA256SUMS.txt'
 
@@ -29,6 +31,9 @@ $isccCommand = if (Test-Path -LiteralPath $localIscc) { $localIscc } else {
 }
 if ($isccCommand) {
     & $isccCommand (Join-Path $projectRoot 'installer\InternetMeter.iss')
+    if ($LASTEXITCODE -ne 0) {
+        throw "Inno Setup compilation failed with exit code $LASTEXITCODE."
+    }
 } else {
     Write-Warning 'Inno Setup was not found; the portable build is ready but the installer was not compiled.'
 }
@@ -44,7 +49,10 @@ $checksumTargets = @(
 )
 $checksumTargets = $checksumTargets | Where-Object { Test-Path -LiteralPath $_ }
 $checksumLines = foreach ($target in $checksumTargets) {
-    $relativePath = [IO.Path]::GetRelativePath((Join-Path $projectRoot 'artifacts'), $target).Replace('\', '/')
+    if (!$target.StartsWith($artifactsPrefix, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Checksum target is outside the artifacts directory: $target"
+    }
+    $relativePath = $target.Substring($artifactsPrefix.Length).Replace('\', '/')
     $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $target).Hash
     "$hash  $relativePath"
 }

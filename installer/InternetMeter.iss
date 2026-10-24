@@ -1,5 +1,5 @@
 #define MyAppName "Internet Meter"
-#define MyAppVersion "1.0.2"
+#define MyAppVersion "1.0.3"
 #define MyAppPublisher "Internet Meter"
 #define MyAppExeName "InternetMeter.exe"
 #define DeskbandClsid "{{40B96627-7938-4C3E-A932-0B0E79E50C92}"

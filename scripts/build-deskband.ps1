@@ -30,7 +30,7 @@ $arguments = @(
     '-o', $outputPath,
     (Join-Path $nativeRoot 'Deskband.cpp'),
     (Join-Path $nativeRoot 'Deskband.def'),
-    '-lole32', '-luuid', '-lgdi32', '-luser32', '-lshell32'
+    '-lole32', '-luuid', '-lgdi32', '-luser32', '-lshell32', '-luxtheme'
 )
 & $compiler @arguments
 if ($LASTEXITCODE -ne 0) { throw "Native deskband compilation failed with exit code $LASTEXITCODE." }

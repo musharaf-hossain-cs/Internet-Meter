@@ -57,10 +57,20 @@ public partial class App : System.Windows.Application
             return;
         }
 
+        // Create the activation event before claiming the mutex so that a second process
+        // can always notify the first one, even while the first process is still starting.
+        _showDashboardEvent = new EventWaitHandle(
+            false,
+            EventResetMode.AutoReset,
+            Shared.MeterSharedProtocol.ShowDashboardEventName);
         _singleInstanceMutex = new Mutex(true, @"Local\InternetMeter.SingleInstance", out var isFirstInstance);
         if (!isFirstInstance)
         {
-            System.Windows.MessageBox.Show("Internet Meter is already running.", "Internet Meter", MessageBoxButton.OK, MessageBoxImage.Information);
+            _showDashboardEvent.Set();
+            _showDashboardEvent.Dispose();
+            _showDashboardEvent = null;
+            _singleInstanceMutex.Dispose();
+            _singleInstanceMutex = null;
             Shutdown();
             return;
         }
@@ -169,11 +179,10 @@ public partial class App : System.Windows.Application
 
     private void StartDashboardActivationListener()
     {
-        _showDashboardEvent = new EventWaitHandle(false, EventResetMode.AutoReset, Shared.MeterSharedProtocol.ShowDashboardEventName);
         _activationTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(250), DispatcherPriority.Background,
             (_, _) =>
             {
-                if (_showDashboardEvent.WaitOne(0)) ShowDashboard();
+                if (_showDashboardEvent?.WaitOne(0) == true) ShowDashboard();
             }, Dispatcher);
         _activationTimer.Start();
     }

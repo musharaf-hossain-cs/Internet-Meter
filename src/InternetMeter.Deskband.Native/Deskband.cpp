@@ -5,6 +5,7 @@
 #include <shlguid.h>
 #include <shellapi.h>
 #include <strsafe.h>
+#include <uxtheme.h>
 #include <new>
 #include <string>
 #include <cstring>
@@ -28,7 +29,6 @@ namespace
     constexpr int CompactOffset = 216;
     constexpr int DownloadColorOffset = 220;
     constexpr int UploadColorOffset = 224;
-    constexpr int BackgroundColorOffset = 228;
 
     HINSTANCE moduleInstance = nullptr;
     long dllReferences = 0;
@@ -335,7 +335,6 @@ namespace
                         compact_ = *reinterpret_cast<const int*>(data + CompactOffset) != 0;
                         downloadColor_ = ToColorRef(*reinterpret_cast<const DWORD*>(data + DownloadColorOffset));
                         uploadColor_ = ToColorRef(*reinterpret_cast<const DWORD*>(data + UploadColorOffset));
-                        backgroundColor_ = ToColorRef(*reinterpret_cast<const DWORD*>(data + BackgroundColorOffset));
                     }
                     UnmapViewOfFile(data);
                 }
@@ -352,9 +351,11 @@ namespace
             HDC dc = BeginPaint(window_, &paint);
             RECT rect = {};
             GetClientRect(window_, &rect);
-            HBRUSH background = CreateSolidBrush(backgroundColor_);
-            FillRect(dc, &rect, background);
-            DeleteObject(background);
+
+            // Repaint the portion of the taskbar covered by this child window instead
+            // of filling it with a deskband-owned color. This leaves only the meter
+            // text visible and follows the composited deskband rendering contract.
+            DrawThemeParentBackground(window_, dc, &rect);
             SetBkMode(dc, TRANSPARENT);
 
             UINT dpi = 96;
@@ -412,7 +413,6 @@ namespace
         std::wstring upload_ = L"0.0 KB/s";
         COLORREF downloadColor_ = RGB(56, 189, 248);
         COLORREF uploadColor_ = RGB(167, 139, 250);
-        COLORREF backgroundColor_ = RGB(32, 32, 32);
     };
 
     class ClassFactory final : public IClassFactory
