@@ -22,6 +22,7 @@ public partial class App : System.Windows.Application
     private MainWindow? _mainWindow;
     private SharedMeterPublisher? _sharedMeterPublisher;
     private Forms.NotifyIcon? _notifyIcon;
+    private Drawing.Icon? _applicationIcon;
     private Forms.ContextMenuStrip? _trayMenu;
     private DispatcherTimer? _flushTimer;
     private DispatcherTimer? _activationTimer;
@@ -121,10 +122,20 @@ public partial class App : System.Windows.Application
         _trayMenu.Items.Add(new Forms.ToolStripSeparator());
         _trayMenu.Items.Add("Exit", null, (_, _) => Dispatcher.Invoke(async () => await ExitApplicationAsync()));
 
+        var iconResource = GetResourceStream(new Uri("pack://application:,,,/Assets/Brand/internet-meter.ico"));
+        if (iconResource is not null)
+        {
+            using (iconResource.Stream)
+            using (var sourceIcon = new Drawing.Icon(iconResource.Stream))
+            {
+                _applicationIcon = (Drawing.Icon)sourceIcon.Clone();
+            }
+        }
+
         _notifyIcon = new Forms.NotifyIcon
         {
             Text = "Internet Meter",
-            Icon = Drawing.SystemIcons.Information,
+            Icon = _applicationIcon ?? Drawing.SystemIcons.Application,
             Visible = true,
             ContextMenuStrip = _trayMenu
         };
@@ -242,6 +253,7 @@ public partial class App : System.Windows.Application
     protected override void OnExit(ExitEventArgs e)
     {
         _notifyIcon?.Dispose();
+        _applicationIcon?.Dispose();
         _singleInstanceMutex?.Dispose();
         base.OnExit(e);
     }

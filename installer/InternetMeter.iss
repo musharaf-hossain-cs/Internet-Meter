@@ -1,5 +1,5 @@
 #define MyAppName "Internet Meter"
-#define MyAppVersion "1.0.1"
+#define MyAppVersion "1.0.2"
 #define MyAppPublisher "Internet Meter"
 #define MyAppExeName "InternetMeter.exe"
 #define DeskbandClsid "{{40B96627-7938-4C3E-A932-0B0E79E50C92}"
@@ -17,6 +17,9 @@ OutputBaseFilename=InternetMeter-Setup-{#MyAppVersion}
 Compression=lzma2
 SolidCompression=yes
 WizardStyle=modern
+SetupIconFile=..\src\InternetMeter\Assets\Brand\internet-meter.ico
+WizardSmallImageFile=..\src\InternetMeter\Assets\Brand\internet-meter-128.png
+VersionInfoVersion={#MyAppVersion}.0
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 ; Never let Restart Manager close Explorer: the deskband DLL is loaded in the

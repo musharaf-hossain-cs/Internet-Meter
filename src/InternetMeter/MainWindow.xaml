@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:InternetMeter.Controls"
         Title="Internet Meter" Width="920" Height="650" MinWidth="760" MinHeight="540"
+        Icon="Assets/Brand/internet-meter.ico"
         WindowStartupLocation="CenterScreen" Background="{StaticResource AppBackgroundBrush}"
         Foreground="{StaticResource TextPrimaryBrush}">
     <Grid Margin="22">
@@ -16,9 +17,14 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <StackPanel>
-                <TextBlock FontSize="26" FontWeight="SemiBold" Text="Internet Meter"/>
-                <TextBlock Foreground="{StaticResource TextMutedBrush}" Text="Live network activity on your taskbar"/>
+            <StackPanel Orientation="Horizontal">
+                <Image Width="46" Height="46" Margin="0,0,12,0"
+                       Source="Assets/Brand/internet-meter-64.png"
+                       Stretch="Uniform" SnapsToDevicePixels="True"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock FontSize="26" FontWeight="SemiBold" Text="Internet Meter"/>
+                    <TextBlock Foreground="{StaticResource TextMutedBrush}" Text="Live network activity on your taskbar"/>
+                </StackPanel>
             </StackPanel>
             <Border Grid.Column="1" Background="#162B3B" CornerRadius="16" Padding="12,6" VerticalAlignment="Center">
                 <TextBlock Foreground="#7DD3FC" Text="● Monitoring" FontWeight="SemiBold"/>

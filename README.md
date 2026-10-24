@@ -1,5 +1,9 @@
 # Internet Meter
 
+<p align="center">
+  <img src="src/InternetMeter/Assets/Brand/internet-meter-256.png" width="128" height="128" alt="Internet Meter logo">
+</p>
+
 Internet Meter is a lightweight Windows network monitor inspired by the workflow of DU Meter. It shows current download and upload throughput, keeps local usage history, and provides a dashboard for graphs, reports, alerts, per-app traffic, a transfer stopwatch, and connection inspection.
 
 ![Internet Meter dashboard](artifacts/dashboard-physical.png)

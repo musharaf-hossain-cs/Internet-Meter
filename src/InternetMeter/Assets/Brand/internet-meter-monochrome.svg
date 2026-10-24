@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Internet Meter network traffic icon">
+<defs><linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#11283e"/><stop offset="1" stop-color="#081827"/></linearGradient><linearGradient id="down" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#17ddf5"/><stop offset=".56" stop-color="#08baf5"/><stop offset="1" stop-color="#008ee9"/></linearGradient><linearGradient id="up" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7359ff"/><stop offset=".55" stop-color="#a527f5"/><stop offset="1" stop-color="#dc42e9"/></linearGradient></defs>
+<circle cx="128" cy="128" r="122" fill="#17283A"/>
+<!-- Download: upper right-to-left traffic arc and broad arrowhead -->
+<path d="M 42 109 C 49 62 89 32 140 34 C 189 35 219 64 227 105 C 203 70 176 57 142 59 C 102 61 77 84 72 109 L 88 109 Q 94 109 90 116 L 61 153 Q 57 159 52 153 L 23 116 Q 19 109 26 109 Z" fill="#FFFFFF"/>
+<!-- Upload: lower left-to-right traffic arc and broad arrowhead -->
+<path d="M 214 147 C 207 194 167 224 116 222 C 67 221 37 192 29 151 C 53 186 80 199 114 197 C 154 195 179 172 184 147 L 168 147 Q 162 147 166 140 L 195 103 Q 199 97 204 103 L 233 140 Q 237 147 230 147 Z" fill="#FFFFFF"/>
+</svg>

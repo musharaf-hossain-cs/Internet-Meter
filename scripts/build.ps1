@@ -5,7 +5,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
-$appVersion = '1.0.1'
+$appVersion = '1.0.2'
 $localDotNet = Join-Path $projectRoot '.dotnet\dotnet.exe'
 $dotnetCommand = if (Test-Path -LiteralPath $localDotNet) { $localDotNet } else { 'dotnet' }
 $publishDirectory = Join-Path $projectRoot 'artifacts\publish'

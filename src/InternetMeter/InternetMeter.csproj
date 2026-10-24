@@ -9,10 +9,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>InternetMeter</AssemblyName>
     <RootNamespace>InternetMeter</RootNamespace>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
-    <InformationalVersion>1.0.1</InformationalVersion>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
+    <InformationalVersion>1.0.2</InformationalVersion>
+    <ApplicationIcon>Assets\Brand\internet-meter.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x64</Platforms>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
@@ -26,6 +27,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Shared\MeterSharedProtocol.cs" Link="Shared\MeterSharedProtocol.cs" />
+    <Resource Include="Assets\Brand\internet-meter.ico" />
+    <Resource Include="Assets\Brand\internet-meter-64.png" />
     <None Include="..\InternetMeter.Deskband.Native\bin\$(Configuration)\InternetMeter.Deskband.dll"
           Link="InternetMeter.Deskband.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest"
           ExcludeFromSingleFile="true" />
